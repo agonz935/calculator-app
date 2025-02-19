@@ -1,6 +1,8 @@
 package calculator.model;
 
 
+import static java.lang.Math.sqrt;
+
 public class CalculatorModel {
     private double firstOperand;
     private double secondOperand;
@@ -40,6 +42,9 @@ public class CalculatorModel {
                 } else {
                     result = Double.NaN;
                 }
+                break;
+            case 's':
+                result = sqrt(firstOperand);
                 break;
         }
     }

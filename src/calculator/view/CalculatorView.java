@@ -11,7 +11,7 @@ public class CalculatorView extends JFrame {
     private JButton numButton1, numButton2, numButton3, numButton4, numButton5, 
             numButton6, numButton7, numButton8, numButton9, numButton0, //numbers 0-9
              addButton, subtractButton, multiplyButton, divideButton, equalButton, //operator and calculation
-            clearButton,deleteButton, decimalButton, negativeButton; //special buttons
+            clearButton,deleteButton, decimalButton, negativeButton, squareRootButton; //special buttons
     
     private JTextField currentText, previousText; //textboxes for previous and current strings
     
@@ -74,6 +74,7 @@ public class CalculatorView extends JFrame {
         multiplyButton = new JButton("x");
         divideButton = new JButton("÷");
         equalButton = new JButton("=");
+        squareRootButton = new JButton("s");
 
 
         //Previous text box
@@ -128,12 +129,8 @@ public class CalculatorView extends JFrame {
         setButtonRow(jpMain, gridConstraints, 4, numButton1, numButton2, numButton3, addButton);
 
         //fifth row
-        setButtonDesign(decimalButton, numButton0, equalButton);
-        setButtonRow(jpMain, gridConstraints, 5, decimalButton, numButton0);
-        //Add equals button with double width
-        gridConstraints.gridx = 3;
-        gridConstraints.gridwidth = 2;
-        jpMain.add(equalButton, gridConstraints); //equal button takes up two columns
+        setButtonDesign(decimalButton, numButton0, squareRootButton, equalButton);
+        setButtonRow(jpMain, gridConstraints, 5, decimalButton, numButton0, squareRootButton, equalButton);
 
         this.add(jpMain);
     }
@@ -162,7 +159,7 @@ public class CalculatorView extends JFrame {
             String buttonText = b.getText();
             
             if(buttonText.equals("+") || buttonText.equals("-") || buttonText.equals("x") 
-                    || buttonText.equals("÷") || buttonText.equals("=")) {
+                    || buttonText.equals("÷") || buttonText.equals("=") || buttonText.equals("s")) {
                 b.setBackground(customOrange);
                 b.setForeground(Color.white);
             } else if(buttonText.equals("C") || buttonText.equals("DEL") || buttonText.equals("+/-")) {
@@ -233,4 +230,6 @@ public class CalculatorView extends JFrame {
     public void addDeleteButtonListener(ActionListener listener) {
         deleteButton.addActionListener(listener);
     }
+
+    public void addSquareRootButtonListener (ActionListener listener) { squareRootButton.addActionListener(listener); }
 }

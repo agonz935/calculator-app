@@ -23,6 +23,7 @@ public class CalculatorController {
         view.addDeleteButtonListener(new DeleteButtonListener());
         view.addDecimalButtonListener(new DecimalButtonListener());
         view.addNegativeButtonListener(new NegativeButtonListener());
+        view.addSquareRootButtonListener(new SquareButtonListener());
     }
 
     private class NumberButtonListener implements ActionListener {
@@ -40,8 +41,32 @@ public class CalculatorController {
         public void actionPerformed(ActionEvent e) {
 
             JButton source = (JButton) e.getSource();
-            view.setPreviousText(view.getCurrentText() + " " + source.getText() + " ");
-            view.setCurrentText("");
+
+            String[] operatorCheck = view.getPreviousText().split(" ");
+            if(operatorCheck.length > 1){
+
+                 if(!view.getCurrentText().isEmpty()) {
+
+                     double firstNumber = Double.parseDouble(operatorCheck[0]);
+                     char operator = operatorCheck[1].charAt(0);
+                     double secondNumber = Double.parseDouble(view.getCurrentText());
+
+                     model.setFirstOperand(firstNumber);
+                     model.setSecondOperand(secondNumber);
+                     model.setOperator(operator);
+                     model.calculate();
+
+
+                     String df = new DecimalFormat("#.###############").format(model.getResult());
+                     view.setPreviousText(df + " " + source.getText() + " ");
+                     view.setCurrentText("");
+                 }else{
+                     view.setPreviousText(operatorCheck[0] + " " + source.getText() + " ");
+                 }
+            }else {
+                view.setPreviousText(view.getCurrentText() + " " + source.getText() + " ");
+                view.setCurrentText("");
+            }
         }
     }
 
@@ -108,6 +133,25 @@ public class CalculatorController {
         }
     }
 
+    private class SquareButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton source = (JButton) e.getSource();
+
+
+            System.out.println(Double.parseDouble(view.getCurrentText()));
+            model.setFirstOperand(Double.parseDouble(view.getCurrentText()));
+
+            model.setOperator(source.getText().charAt(0));
+
+
+            model.calculate();
+            System.out.println(model.getResult());
+
+            String df = new DecimalFormat("#.###############").format(model.getResult());
+            view.setCurrentText(df);
+        }
+    }
 
 
 }
